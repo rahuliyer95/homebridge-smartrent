@@ -21,8 +21,8 @@
     "url": "git+https://github.com/hpcreery/homebridge-smartrent.git"
   },
   "engines": {
-    "node": ">=12",
-    "homebridge": ">=1.3.5"
+    "node": "^18.20.4 || ^20.16.0 || ^22.5.1",
+    "homebridge": "^1.8.0 || ^2.0.0-beta.0"
   },
   "main": "dist/index.js",
   "files": [
