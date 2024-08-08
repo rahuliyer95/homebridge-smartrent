@@ -6,6 +6,6 @@ updates:
       interval: daily
       time: '04:00'
     assignees:
-      - 'Burry'
+      - rahuliyer95
     reviewers:
-      - 'Burry'
+      - rahuliyer95
