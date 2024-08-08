@@ -1,7 +1,7 @@
 {
   "displayName": "SmartRent",
-  "name": "@hpcreery/homebridge-smartrent",
-  "version": "1.1.0",
+  "name": "@rahuliyer95/homebridge-smartrent",
+  "version": "1.2.0",
   "description": "Homebridge plugin for SmartRent installations",
   "keywords": [
     "homebridge",
@@ -15,10 +15,10 @@
     "registry": "https://registry.npmjs.org/",
     "tag": "latest"
   },
-  "author": "Hunter Creery",
+  "author": "Rahul Iyer",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hpcreery/homebridge-smartrent.git"
+    "url": "git+https://github.com/rahuliyer95/homebridge-smartrent.git"
   },
   "engines": {
     "node": "^18.20.4 || ^20.16.0 || ^22.5.1",
@@ -81,7 +81,7 @@
   },
   "types": "./dist/index.d.ts",
   "bugs": {
-    "url": "https://github.com/hpcreery/homebridge-smartrent/issues"
+    "url": "https://github.com/rahuliyer95/homebridge-smartrent/issues"
   },
-  "homepage": "https://github.com/hpcreery/homebridge-smartrent#readme"
+  "homepage": "https://github.com/rahuliyer95/homebridge-smartrent#readme"
 }
