@@ -143,7 +143,7 @@ export class LockAccessory {
   async handleLockEvent(event: WSEvent) {
     this.platform.log.debug('Recieved event on Lock: ', event);
     switch (event.name) {
-      case 'locked':
+      case 'locked': {
         const currentValue = this._getLockStateCharacteristicValue(
           event.last_read_state === 'true'
         );
@@ -158,6 +158,7 @@ export class LockAccessory {
         this.state.locked.current = currentValue;
         this.state.locked.target = currentValue;
         break;
+      }
       case 'notifications':
         break;
     }

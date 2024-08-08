@@ -1,8 +1,13 @@
-import axios, { AxiosRequestConfig, AxiosResponse, AxiosInstance } from 'axios';
-import { API_URL, API_CLIENT_HEADERS, WS_API_URL, WS_VERSION } from './request';
-import { SmartRentAuthClient } from './auth';
-import { SmartRentPlatform } from '../platform';
+import axios, {
+  AxiosInstance,
+  AxiosRequestConfig,
+  AxiosResponse,
+  InternalAxiosRequestConfig,
+} from 'axios';
 import WebSocket from 'ws';
+import { SmartRentPlatform } from '../platform';
+import { SmartRentAuthClient } from './auth';
+import { API_CLIENT_HEADERS, API_URL, WS_API_URL, WS_VERSION } from './request';
 
 export type WSDeviceList = `devices:${string}`;
 export type WSEvent = {
@@ -69,12 +74,9 @@ export class SmartRentApiClient {
    * @param config Axios request config
    * @returns Axios request config
    */
-  private async _handleRequest(config: AxiosRequestConfig) {
+  private async _handleRequest(config: InternalAxiosRequestConfig) {
     const accessToken = await this.getAccessToken();
-    config.headers = {
-      ...config.headers,
-      Authorization: `Bearer ${accessToken}`,
-    };
+    config.headers.Authorization = `Bearer ${accessToken}`;
     this.platform.log.debug('Request:', JSON.stringify(config, null, 2));
     this.platform.log.debug('Request:');
     return config;
@@ -124,8 +126,8 @@ export class SmartRentApiClient {
 
 export class SmartRentWebsocketClient extends SmartRentApiClient {
   public wsClient: Promise<WebSocket>;
-  public event: Object;
-  private devices: Number[];
+  public event: object;
+  private devices: number[];
 
   constructor(readonly platform: SmartRentPlatform) {
     super(platform);
@@ -135,13 +137,13 @@ export class SmartRentWebsocketClient extends SmartRentApiClient {
   }
 
   private _emitize(obj: object, eventName: string) {
-    let _subscriptions = new Set<Function>();
+    let _subscriptions = new Set<(...args: never[]) => void>();
     Object.defineProperty(obj, eventName, {
       set(func) {
         _subscriptions.add(func);
       },
       get() {
-        var emit = (...args: any[]) => {
+        const emit = (...args: never[]) => {
           _subscriptions.forEach(f => f(...args));
         };
 
@@ -187,7 +189,7 @@ export class SmartRentWebsocketClient extends SmartRentApiClient {
     this.platform.log.debug(
       `WebSocket message received: Data: ${message.data}`
     );
-    let data: WSPayload = JSON.parse(String(message.data));
+    const data: WSPayload = JSON.parse(String(message.data));
     if (data[3].includes('attribute_state')) {
       const device = data[2].split(':')[1];
       this.platform.log.debug(String(data[4]));
@@ -210,15 +212,16 @@ export class SmartRentWebsocketClient extends SmartRentApiClient {
    * Adds device to websocket client subsciption list and announces events to device handlers
    * @param deviceId Device ID
    */
-  public async subscribeDevice(deviceId: Number) {
+  public async subscribeDevice(deviceId: number) {
     this.platform.log.debug(`Subscribing to device: ${deviceId}`);
     if (!this.devices.includes(deviceId)) {
       this.devices.push(deviceId);
       this._emitize(this.event, `${deviceId}`);
     }
     try {
-      if ((await this.wsClient).readyState !== WebSocket.OPEN)
+      if ((await this.wsClient).readyState !== WebSocket.OPEN) {
         throw 'WebSocket not ready';
+      }
       (await this.wsClient).send(
         JSON.stringify(<WSPayload>[
           null,

@@ -21,7 +21,7 @@
     "url": "git+https://github.com/rahuliyer95/homebridge-smartrent.git"
   },
   "engines": {
-    "node": "^18.20.4 || ^20.16.0 || ^22.5.1",
+    "node": "^20.16.0 || ^22.5.1",
     "homebridge": "^1.8.0 || ^2.0.0-beta.0"
   },
   "main": "dist/index.js",
@@ -39,8 +39,8 @@
     "typecheck": "tsc --noEmit",
     "prettier": "prettier --check .",
     "format": "prettier --write .",
-    "lint": "eslint src/**.ts",
-    "lint:fix": "eslint src/**.ts --fix",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
     "clean": "rimraf ./dist",
     "compile": "tsc",
     "build": "npm-run-all clean compile",
@@ -51,7 +51,7 @@
   "dependencies": {
     "@homebridge/plugin-ui-utils": "^0.0.19",
     "axios": "^1.7.3",
-    "ws": "^8.8.1"
+    "ws": "^8.18.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.4.0",
@@ -60,12 +60,12 @@
     "@semantic-release/commit-analyzer": "^9.0.2",
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^8.0.2",
-    "@semantic-release/npm": "^9.0.0",
+    "@semantic-release/npm": "^12.0.1",
     "@semantic-release/release-notes-generator": "^10.0.3",
-    "@types/node": "^18.7.1",
-    "@types/ws": "^8.5.3",
-    "@typescript-eslint/eslint-plugin": "^5.10.0",
-    "@typescript-eslint/parser": "^5.10.0",
+    "@types/node": "^20.14.14",
+    "@types/ws": "^8.5.12",
+    "@typescript-eslint/eslint-plugin": "^8.0.1",
+    "@typescript-eslint/parser": "^8.0.1",
     "cross-env": "^7.0.3",
     "eslint": "^9.8.0",
     "homebridge": "^1.4.0",

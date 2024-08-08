@@ -63,7 +63,7 @@ export class SmartRentAuthClient {
   private storagePath = '~/.homebridge';
   private pluginPath = '~/.homebridge/smartrent';
   private sessionPath = '~/.homebridge/smartrent/session.json';
-  private readonly log: Logger;
+  private readonly log: Logger | Console;
   private readonly client: AxiosInstance;
 
   constructor(storagePath: string, log?: Logger) {
