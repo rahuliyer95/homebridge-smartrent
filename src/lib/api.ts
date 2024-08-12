@@ -162,7 +162,7 @@ export class SmartRentApi {
 
   public async setState<
     Device extends BaseDeviceResponse,
-    A extends BaseDeviceAttributes
+    A extends BaseDeviceAttributes,
   >(hubId: string, deviceId: string, attributes: Partial<A>) {
     const device = await this.client.patch<Device>(
       `/hubs/${hubId}/devices/${deviceId}`,
