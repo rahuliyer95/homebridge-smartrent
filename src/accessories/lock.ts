@@ -4,6 +4,8 @@ import { WSEvent } from '../lib/client';
 import { SmartRentPlatform } from '../platform';
 import { Lock, LockAttributes } from './../devices';
 
+const UPDATE_STATE_INTERVAL = 60 * 60 * 1_000; // 1 hour
+
 /**
  * Lock Accessory
  * An instance of this class is created for each accessory the platform registers
@@ -168,8 +170,8 @@ export class LockAccessory {
    * Refresh the current state of the lock using the SmartRent API HTTP request in intervals
    */
   private async updateState() {
-    this.platform.log.debug(
-      'Beginning updateStateTask',
+    this.platform.log.info(
+      '[lock] Beginning updateState',
       this.state.locked.current
     );
     try {
@@ -181,11 +183,8 @@ export class LockAccessory {
         this.state.hubId,
         this.state.deviceId
       );
-      this.platform.log.debug(
-        '[updateStateTask] lockAttributes',
-        lockAttributes
-      );
-      this.platform.log.debug('[updateStateTask] lockData', lockData);
+      this.platform.log.debug('[updateState] lockAttributes', lockAttributes);
+      this.platform.log.debug('[updateState] lockData', lockData);
       const locked = lockAttributes.locked as boolean;
       const currentValue = this._getLockStateCharacteristicValue(locked);
       this.state.locked.current = currentValue;
@@ -204,9 +203,11 @@ export class LockAccessory {
         .updateValue(this.platform.Characteristic.LockCurrentState.UNKNOWN);
     }
 
-    this.platform.log.debug(
-      'Ending updateStateTask',
+    this.platform.log.info(
+      '[lock] Ending updateState',
       this.state.locked.current
     );
+
+    setTimeout(() => this.updateState(), UPDATE_STATE_INTERVAL);
   }
 }
