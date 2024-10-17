@@ -4,7 +4,7 @@ import { WSEvent } from '../lib/client';
 import { SmartRentPlatform } from '../platform';
 import { Lock, LockAttributes } from './../devices';
 
-const UPDATE_STATE_INTERVAL = 60 * 60 * 1_000; // 1 hour
+const UPDATE_STATE_INTERVAL = 5 * 60 * 1_000; // 5 minutes
 
 /**
  * Lock Accessory
