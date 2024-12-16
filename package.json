@@ -50,7 +50,7 @@
     "semantic-release": "cross-env HUSKY=0 semantic-release"
   },
   "dependencies": {
-    "@homebridge/plugin-ui-utils": "^1.0.3",
+    "@homebridge/plugin-ui-utils": "^2.0.0",
     "axios": "^1.7.7",
     "ws": "^8.18.0"
   },
