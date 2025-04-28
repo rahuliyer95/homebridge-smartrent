@@ -161,7 +161,7 @@ export class SmartRentAuthClient {
       expires: SmartRentAuthClient._getExpireDate(data.expires),
     };
     this.session = session;
-    this.log.info(`${refreshed ? 'Refreshed' : 'Started'} SmartRent session`);
+    this.log.debug(`${refreshed ? 'Refreshed' : 'Started'} SmartRent session`);
     const sessionStr = JSON.stringify(this.session, null, 2);
     await fsPromises.writeFile(this.sessionPath, sessionStr);
     this.log.debug('Saved session to', this.sessionPath);
@@ -321,7 +321,7 @@ export class SmartRentAuthClient {
 
     // Refresh the session if it's expired
     if (this.session) {
-      this.log.warn('Access token expired, attempting to refresh session');
+      this.log.debug('Access token expired, attempting to refresh session');
       const refreshedSession = await this._refreshSession();
       if (refreshedSession) {
         return refreshedSession;
