@@ -170,10 +170,11 @@ export class LockAccessory {
    * Refresh the current state of the lock using the SmartRent API HTTP request in intervals
    */
   private async updateState() {
-    this.platform.log.info(
+    this.platform.log.debug(
       '[lock] Beginning updateState',
       this.state.locked.current
     );
+    let nextUpdateStateInterval = UPDATE_STATE_INTERVAL;
     try {
       const lockAttributes = await this.platform.smartRentApi.getState(
         this.state.hubId,
@@ -201,13 +202,14 @@ export class LockAccessory {
       this.service
         .getCharacteristic(this.platform.Characteristic.LockCurrentState)
         .updateValue(this.platform.Characteristic.LockCurrentState.UNKNOWN);
+      nextUpdateStateInterval = 1_000; // faster update because we received some error
     }
 
-    this.platform.log.info(
+    this.platform.log.debug(
       '[lock] Ending updateState',
       this.state.locked.current
     );
 
-    setTimeout(() => this.updateState(), UPDATE_STATE_INTERVAL);
+    setTimeout(() => this.updateState(), nextUpdateStateInterval);
   }
 }
