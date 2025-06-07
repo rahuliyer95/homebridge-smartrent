@@ -190,23 +190,26 @@ export class ThermostatAccessory {
         break;
       }
       case 'mode': {
-        const mode = this.toCurrentHeatingCoolingStateCharacteristic({
-          cool_target_temp: this.state.cooling_threshold_temperature.target,
-          current_humidity: this.state.current_relative_humidity.current,
-          current_temp: this.state.current_temperature.current,
-          fan_mode: this.state.fan_on.current,
-          heat_target_temp: this.state.heating_threshold_temperature.target,
-          mode: event.last_read_state as ThermostatMode,
-        } as ThermostatAttributes);
-        this.state.heating_cooling_state.current = mode;
-        this.state.heating_cooling_state.target = mode;
+        this.state.heating_cooling_state.current =
+          this.toCurrentHeatingCoolingStateCharacteristic({
+            cool_target_temp: this.state.cooling_threshold_temperature.target,
+            current_humidity: this.state.current_relative_humidity.current,
+            current_temp: this.state.current_temperature.current,
+            fan_mode: this.state.fan_on.current,
+            heat_target_temp: this.state.heating_threshold_temperature.target,
+            mode: event.last_read_state as ThermostatMode,
+          } as ThermostatAttributes);
+        this.state.heating_cooling_state.target =
+          this.toTargetHeatingCoolingStateCharacteristic(
+            event.last_read_state as ThermostatMode
+          );
         this.thermostatService.updateCharacteristic(
           this.platform.Characteristic.CurrentHeatingCoolingState,
-          mode
+          this.state.heating_cooling_state.current
         );
         this.thermostatService.updateCharacteristic(
           this.platform.Characteristic.TargetHeatingCoolingState,
-          mode
+          this.state.heating_cooling_state.target
         );
         break;
       }
