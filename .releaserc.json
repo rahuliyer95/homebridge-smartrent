@@ -1,13 +1,18 @@
 {
-  "branch": ["master", "next"],
-  "preset": "conventionalcommits",
+  "branch": ["master"],
   "plugins": [
     [
       "@semantic-release/commit-analyzer",
       {
         "parserOpts": {
           "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES", "BREAKING"]
-        }
+        },
+        "releaseRules": [
+          {
+            "release": "patch",
+            "type": "chore"
+          }
+        ]
       }
     ],
     [
@@ -16,8 +21,38 @@
         "parserOpts": {
           "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES", "BREAKING"]
         },
+        "preset": "conventionalcommits",
+        "presetConfig": {
+          "types": [
+            {
+              "type": "fix",
+              "section": "Bug Fixes"
+            },
+            {
+              "type": "chore",
+              "scope": "deps",
+              "section": "Dependencies",
+              "hidden": false
+            },
+            {
+              "type": "docs",
+              "section": "Documentation",
+              "hidden": false
+            },
+            {
+              "type": "style",
+              "section": "Styles",
+              "hidden": false
+            },
+            {
+              "type": "test",
+              "section": "Tests",
+              "hidden": false
+            }
+          ]
+        },
         "writerOpts": {
-          "commitsSort": ["subject", "scope"]
+          "commitsSort": ["scope", "subject"]
         }
       }
     ],
@@ -37,8 +72,9 @@
     [
       "@semantic-release/git",
       {
-        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+        "message": "chore(release): ${nextRelease.version} [skip ci]"
       }
     ]
-  ]
+  ],
+  "preset": "conventionalcommits"
 }
