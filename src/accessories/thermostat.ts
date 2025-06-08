@@ -190,18 +190,26 @@ export class ThermostatAccessory {
         break;
       }
       case 'mode': {
-        const mode = this.toCurrentHeatingCoolingStateCharacteristic(
-          event.last_read_state as ThermostatMode
-        );
-        this.state.heating_cooling_state.current = mode;
-        this.state.heating_cooling_state.target = mode;
+        this.state.heating_cooling_state.current =
+          this.toCurrentHeatingCoolingStateCharacteristic({
+            cool_target_temp: this.state.cooling_threshold_temperature.target,
+            current_humidity: this.state.current_relative_humidity.current,
+            current_temp: this.state.current_temperature.current,
+            fan_mode: this.state.fan_on.current,
+            heat_target_temp: this.state.heating_threshold_temperature.target,
+            mode: event.last_read_state as ThermostatMode,
+          } as ThermostatAttributes);
+        this.state.heating_cooling_state.target =
+          this.toTargetHeatingCoolingStateCharacteristic(
+            event.last_read_state as ThermostatMode
+          );
         this.thermostatService.updateCharacteristic(
           this.platform.Characteristic.CurrentHeatingCoolingState,
-          mode
+          this.state.heating_cooling_state.current
         );
         this.thermostatService.updateCharacteristic(
           this.platform.Characteristic.TargetHeatingCoolingState,
-          mode
+          this.state.heating_cooling_state.target
         );
         break;
       }
@@ -253,9 +261,9 @@ export class ThermostatAccessory {
   }
 
   private toCurrentHeatingCoolingStateCharacteristic(
-    thermostatMode: ThermostatMode
+    currentAttributes: ThermostatAttributes
   ) {
-    switch (thermostatMode) {
+    switch (currentAttributes.mode) {
       case 'off':
         return this.platform.Characteristic.CurrentHeatingCoolingState.OFF;
       case 'cool':
@@ -263,9 +271,23 @@ export class ThermostatAccessory {
       case 'heat':
         return this.platform.Characteristic.CurrentHeatingCoolingState.HEAT;
       case 'auto':
-        return this.platform.Characteristic.TargetHeatingCoolingState.AUTO;
+        // When in auto mode, determine if the system is currently heating or cooling
+        // by comparing current temperature against target temperatures
+        if (
+          currentAttributes.current_temp >= currentAttributes.cool_target_temp
+        ) {
+          // If current temperature is above or equal to cooling setpoint, the system should be cooling
+          return this.platform.Characteristic.CurrentHeatingCoolingState.COOL;
+        } else if (
+          currentAttributes.current_temp <= currentAttributes.heat_target_temp
+        ) {
+          // If current temperature is below or equal to heating setpoint, the system should be heating
+          return this.platform.Characteristic.CurrentHeatingCoolingState.HEAT;
+        }
+        // If temperature is between setpoints, system is idle
+        return this.platform.Characteristic.CurrentHeatingCoolingState.OFF;
       default:
-        return this.platform.Characteristic.TargetHeatingCoolingState.OFF;
+        return this.platform.Characteristic.CurrentHeatingCoolingState.OFF;
     }
   }
 
@@ -373,9 +395,8 @@ export class ThermostatAccessory {
       this.state.deviceId
     )) as ThermostatAttributes;
 
-    const currentValue = this.toCurrentHeatingCoolingStateCharacteristic(
-      thermostatAttributes.mode
-    );
+    const currentValue =
+      this.toCurrentHeatingCoolingStateCharacteristic(thermostatAttributes);
     this.state.heating_cooling_state.current = currentValue;
     return currentValue;
   }
