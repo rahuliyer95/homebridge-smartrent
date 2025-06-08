@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.4](https://github.com/rahuliyer95/homebridge-smartrent/compare/v1.2.3...v1.2.4) (2025-06-08)
+
+### Bug Fixes
+
+* **thermostat:** handle `auto` mode in thermostat ([#244](https://github.com/rahuliyer95/homebridge-smartrent/issues/244)) ([1d90127](https://github.com/rahuliyer95/homebridge-smartrent/commit/1d901278d8195530b3a21ca04f0c6f683d1f0f55))
+
 ## [1.2.3](https://github.com/rahuliyer95/homebridge-smartrent/compare/v1.2.2...v1.2.3) (2025-06-07)
 
 ### Dependencies
