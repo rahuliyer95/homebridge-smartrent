@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.5](https://github.com/rahuliyer95/homebridge-smartrent/compare/v1.2.4...v1.2.5) (2025-07-29)
+
+### Dependencies
+
+* **deps:** bump @homebridge/plugin-ui-utils from 2.0.2 to 2.1.0 ([#245](https://github.com/rahuliyer95/homebridge-smartrent/issues/245)) ([4c7e43f](https://github.com/rahuliyer95/homebridge-smartrent/commit/4c7e43f90aa567b6be2b3ee52c0bb8a3198cb50a))
+* **deps:** bump axios from 1.10.0 to 1.11.0 ([#283](https://github.com/rahuliyer95/homebridge-smartrent/issues/283)) ([41fc200](https://github.com/rahuliyer95/homebridge-smartrent/commit/41fc20015357091b7dd4a8470905a35a11b52d40))
+* **deps:** bump axios from 1.9.0 to 1.10.0 ([#252](https://github.com/rahuliyer95/homebridge-smartrent/issues/252)) ([d3d7038](https://github.com/rahuliyer95/homebridge-smartrent/commit/d3d7038395c93c22573c7f87dbc9c8844e7f6406))
+* **deps:** bump form-data from 4.0.0 to 4.0.4 ([#282](https://github.com/rahuliyer95/homebridge-smartrent/issues/282)) ([5d2b9d4](https://github.com/rahuliyer95/homebridge-smartrent/commit/5d2b9d4c0c275cb7cc8d24ac91d6b166355fdc6f))
+* **deps:** bump ws from 8.18.2 to 8.18.3 ([#264](https://github.com/rahuliyer95/homebridge-smartrent/issues/264)) ([f8e42f5](https://github.com/rahuliyer95/homebridge-smartrent/commit/f8e42f5f25c5a80746a030cf9b78d17d968da6dd))
+
 ## [1.2.4](https://github.com/rahuliyer95/homebridge-smartrent/compare/v1.2.3...v1.2.4) (2025-06-08)
 
 ### Bug Fixes
