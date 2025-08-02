@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.6](https://github.com/rahuliyer95/homebridge-smartrent/compare/v1.2.5...v1.2.6) (2025-08-02)
+
+### Bug Fixes
+
+* update app version to `4.5.3` to resolve 403 errors ([a0ab7d9](https://github.com/rahuliyer95/homebridge-smartrent/commit/a0ab7d94d593d634ae43702c1b215749e5ec7bed))
+
 ## [1.2.5](https://github.com/rahuliyer95/homebridge-smartrent/compare/v1.2.4...v1.2.5) (2025-07-29)
 
 ### Dependencies
