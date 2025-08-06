@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.7](https://github.com/rahuliyer95/homebridge-smartrent/compare/v1.2.6...v1.2.7) (2025-08-06)
+
+### Bug Fixes
+
+* **client:** improve WebSocket error logging ([193f71c](https://github.com/rahuliyer95/homebridge-smartrent/commit/193f71cb0096dad7a5c2fed2c356d2a3f3c586e6))
+
 ## [1.2.6](https://github.com/rahuliyer95/homebridge-smartrent/compare/v1.2.5...v1.2.6) (2025-08-02)
 
 ### Bug Fixes
