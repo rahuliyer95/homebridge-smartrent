@@ -29,7 +29,18 @@ export type WSEvent = {
   last_read_state: string;
   last_read_state_changed_at: string;
 };
-export type WSPayload = [null, null, WSDeviceList, string, WSEvent];
+export type WSHeartbeatPayload = [null, null, 'phoenix', 'hearbeat', WSEvent];
+export type WSPayload =
+  | [null, null, WSDeviceList, string, WSEvent]
+  | WSHeartbeatPayload;
+const WEB_SOCKET_HEARTBEAT_INTERVAL = 30_000; // 30 seconds
+const WEB_SOCKET_HEARTBEAT_PAYLOAD = JSON.stringify(<WSHeartbeatPayload>[
+  null,
+  null,
+  'phoenix',
+  'hearbeat',
+  {},
+]);
 
 const NON_RETRYABLE_STATUS_CODES = [
   400, // BAD_REQUEST
@@ -161,6 +172,7 @@ export class SmartRentWebsocketClient extends SmartRentApiClient {
   public wsClient: Promise<WebSocket>;
   public event: object;
   private devices: number[];
+  private wsHeartbeat: NodeJS.Timeout | undefined;
 
   constructor(readonly platform: SmartRentPlatform) {
     super(platform);
@@ -216,6 +228,7 @@ export class SmartRentWebsocketClient extends SmartRentApiClient {
   private _handleWsOpen() {
     this.platform.log.debug('WebSocket connection opened');
     this.devices.forEach(device => this.subscribeDevice(device));
+    this.startWebSocketHeartbeat();
   }
 
   private _handleWsMessage(message: WebSocket.MessageEvent) {
@@ -239,6 +252,7 @@ export class SmartRentWebsocketClient extends SmartRentApiClient {
       `WebSocket connection closed: Code: ${event.code}, Reason: ${event.reason}`
     );
     this.wsClient = this._initializeWsClient();
+    this.stopWebSocketHeartbeat();
   }
 
   /**
@@ -264,11 +278,32 @@ export class SmartRentWebsocketClient extends SmartRentApiClient {
           {},
         ])
       );
-      this.platform.log.debug(`Subscribed to device: ${deviceId}`);
+      this.platform.log.info(`Subscribed to device: ${deviceId}`);
     } catch (err) {
-      this.platform.log.error(String(err));
-      this.platform.log.error(`Dang didnt subscribe ${deviceId}, trying again`);
+      this.platform.log.warn(
+        `Dang didn't subscribe to device: ${deviceId}, trying again in 1 second`,
+        err
+      );
       setTimeout(() => this.subscribeDevice(deviceId), 1000);
+    }
+  }
+
+  private startWebSocketHeartbeat() {
+    this.wsHeartbeat = setInterval(async () => {
+      if ((await this.wsClient).readyState !== WebSocket.OPEN) {
+        return;
+      }
+      try {
+        (await this.wsClient).send(WEB_SOCKET_HEARTBEAT_PAYLOAD);
+      } catch (err) {
+        this.platform.log.warn('WebSocket heartbeat failed', err);
+      }
+    }, WEB_SOCKET_HEARTBEAT_INTERVAL);
+  }
+
+  private stopWebSocketHeartbeat() {
+    if (this.wsHeartbeat) {
+      clearInterval(this.wsHeartbeat);
     }
   }
 }
