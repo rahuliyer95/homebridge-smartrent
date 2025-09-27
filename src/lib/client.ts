@@ -4,6 +4,7 @@ import axios, {
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from 'axios';
+import axiosRetry from 'axios-retry';
 import WebSocket from 'ws';
 import { SmartRentPlatform } from '../platform';
 import { SmartRentAuthClient } from './auth';
@@ -30,6 +31,17 @@ export type WSEvent = {
 };
 export type WSPayload = [null, null, WSDeviceList, string, WSEvent];
 
+const NON_RETRYABLE_STATUS_CODES = [
+  400, // BAD_REQUEST
+  405, // METHOD_NOT_ALLOWED
+  406, // NOT_ACCEPTABLE
+  413, // REQUEST_ENTITY_TOO_LARGE
+  414, // REQUEST_URI_TOO_LONG
+  415, // UNSUPPORTED_MEDIA_TYPE
+  416, // REQUESTED_RANGE_NOT_SATISFIABLE
+  422, // UNPROCESSABLE_ENTITY
+];
+
 export class SmartRentApiClient {
   private authClient: SmartRentAuthClient;
   private readonly apiClient: AxiosInstance;
@@ -51,6 +63,27 @@ export class SmartRentApiClient {
     const apiClient = axios.create({
       baseURL: API_URL,
       headers: API_CLIENT_HEADERS,
+    });
+    axiosRetry(apiClient, {
+      retries: 3,
+      retryCondition: error => {
+        if (axiosRetry.isNetworkOrIdempotentRequestError(error)) {
+          return true;
+        }
+        if (
+          error.response &&
+          NON_RETRYABLE_STATUS_CODES.includes(error.response.status)
+        ) {
+          return false;
+        }
+        return true;
+      },
+      onRetry: (retryCount, error, requestConfig) => {
+        this.platform.log.debug(
+          `Retrying ${requestConfig.method?.toUpperCase()} ${requestConfig.url} (attempt ${retryCount})`,
+          error
+        );
+      },
     });
     apiClient.interceptors.request.use(this._handleRequest.bind(this));
     apiClient.interceptors.response.use(this._handleResponse.bind(this));
