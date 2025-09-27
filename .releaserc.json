@@ -48,6 +48,10 @@
               "type": "test",
               "section": "Tests",
               "hidden": false
+            },
+            {
+              "type": "feat",
+              "section": "Features"
             }
           ]
         },

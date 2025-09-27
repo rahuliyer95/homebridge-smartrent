@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.0](https://github.com/rahuliyer95/homebridge-smartrent/compare/v1.2.7...v1.3.0) (2025-09-27)
+
+### Features
+
+* **client:** add heartbeat for WebSocket to fix constant connection closure ([1d2744e](https://github.com/rahuliyer95/homebridge-smartrent/commit/1d2744efefbfb7602e2790917a05d17318dbd08c))
+* **client:** add `axio-retry` to handle retry errors ([77c5a5c](https://github.com/rahuliyer95/homebridge-smartrent/commit/77c5a5c58e9e8d6e8c728ce49bd030949fa159a0))
+
+### Dependencies
+
+* **deps:** bump axios from 1.11.0 to 1.12.2 ([#316](https://github.com/rahuliyer95/homebridge-smartrent/issues/316)) ([d7af3ae](https://github.com/rahuliyer95/homebridge-smartrent/commit/d7af3ae0c847fa25e9ed12f8eb0fe8fdb3cd3bfe))
+
 ## [1.2.7](https://github.com/rahuliyer95/homebridge-smartrent/compare/v1.2.6...v1.2.7) (2025-08-06)
 
 ### Bug Fixes
