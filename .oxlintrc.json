@@ -1,0 +1,24 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc"],
+  "categories": {
+    "correctness": "error"
+  },
+  "env": {
+    "builtin": true,
+    "node": true,
+    "es2022": true
+  },
+  "rules": {
+    "eqeqeq": "warn",
+    "curly": ["warn", "all"],
+    "no-console": "warn",
+    "unicorn/no-empty-file": "off"
+  },
+  "ignorePatterns": [
+    "dist",
+    "node_modules",
+    "homebridge-ui",
+    "commitlint.config.js"
+  ]
+}

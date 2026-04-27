@@ -12,7 +12,8 @@
     "esModuleInterop": true,
     "noImplicitAny": false,
     "allowSyntheticDefaultImports": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node10",
+    "ignoreDeprecations": "6.0"
   },
   "include": ["src/**/*.ts"],
   "exclude": ["**/*.spec.ts"]
