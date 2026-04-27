@@ -9,6 +9,12 @@ src
 # eslint
 .eslintrc
 
+# oxlint
+.oxlintrc.json
+
+# oxfmt
+.oxfmtrc.json
+
 # typescript
 tsconfig.json
 
@@ -72,6 +78,9 @@ web_modules/
 
 # Optional eslint cache
 .eslintcache
+
+# oxlint cache
+.oxlintcache
 
 # Microbundle cache
 .rpt2_cache/
