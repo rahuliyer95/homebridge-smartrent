@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.4](https://github.com/rahuliyer95/homebridge-smartrent/compare/v1.4.3...v1.4.4) (2026-11-06)
+
+
+### Dependencies
+
+* **deps:** bump axios from 1.20.0 to 1.21.0 ([#658](https://github.com/rahuliyer95/homebridge-smartrent/issues/658)) ([66e3637](https://github.com/rahuliyer95/homebridge-smartrent/commit/66e363743d4041bcad9ffb6f7e968abd159a0217))
+* **deps:** bump follow-redirects from 1.16.1 to 1.16.2 ([#662](https://github.com/rahuliyer95/homebridge-smartrent/issues/662)) ([5e55987](https://github.com/rahuliyer95/homebridge-smartrent/commit/5e5598797c3b1c3eb521738dccfa50c61a7c5309))
+
 ## [1.4.3](https://github.com/rahuliyer95/homebridge-smartrent/compare/v1.4.2...v1.4.3) (2026-10-22)
 
 
