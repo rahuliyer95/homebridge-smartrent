@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.5](https://github.com/rahuliyer95/homebridge-smartrent/compare/v1.4.4...v1.4.5) (2026-11-06)
+
+
+### Dependencies
+
+* **deps:** bump minimatch and rimraf ([#664](https://github.com/rahuliyer95/homebridge-smartrent/issues/664)) ([0ee97be](https://github.com/rahuliyer95/homebridge-smartrent/commit/0ee97be8bf81aa284dddb3b75bcf7039cd295613))
+
 ## [1.4.4](https://github.com/rahuliyer95/homebridge-smartrent/compare/v1.4.3...v1.4.4) (2026-11-06)
 
 
